@@ -4,31 +4,42 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
+stages:
+- stage: 'Maven'
+  jobs:
+  - job: 'maven'
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: 'pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'package'
+  - job: 'copy'
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(system.defaultWorkingDirectory)'
+        Contents: '**/*.jar'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'ls -al $(Build.ArtifactStagingDirectory)'
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(system.defaultWorkingDirectory)'
-    Contents: '**/*.jar'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'ls -al $(Build.ArtifactStagingDirectory)'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Azure-Dockerhub'
-    repository: 'tharunmudiraj/myfirstdocrepo'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    buildContext: '$(Build.ArtifactStagingDirectory)'
+- stage: 'Docker'
+  jobs:
+  - job: 'Docker_build_push'
+    steps:
+
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Azure-Dockerhub'
+        repository: 'tharunmudiraj/myfirstdocrepo'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        buildContext: '$(Build.ArtifactStagingDirectory)'
