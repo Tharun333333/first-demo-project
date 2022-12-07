@@ -26,9 +26,7 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-- task: Docker@2
+- task: Bash@3
   inputs:
-    containerRegistry: 'Azure-Dockerhub'
-    repository: 'tharunmudiraj/myfirstdocrepo'
-    command: 'buildAndPush'
-    Dockerfile: '$(System.DefaultWorkingDirectory)/Dockerfile'
+    targetType: 'inline'
+    script: 'la -al  /home/vsts/work/1/a/target/'
