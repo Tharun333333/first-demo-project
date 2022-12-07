@@ -1,2 +1,2 @@
 FROM tomcat:latest
-COPY $(System.DefautltWorkingDirectory)/**/*.jar etc/tomcat/webapps/
+COPY C:\Users\tharu\Downloads\drop.zip\drop\target\*.jar usr/local/tomcat/webapps/
