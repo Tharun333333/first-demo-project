@@ -19,14 +19,15 @@ steps:
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(system.defaultWorkingDirectory)'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    Contents: '**/*.jar'
+    TargetFolder: /
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: 'la -al  /home/vsts/work/1/a/target/'
+    script: 'ls -al /'
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Azure-Dockerhub'
+    repository: 'tharunmudiraj/myfirstdocrepo'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
