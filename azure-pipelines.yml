@@ -31,3 +31,4 @@ steps:
     repository: 'tharunmudiraj/myfirstdocrepo'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    buildContext: '$(Build.ArtifactStagingDirectory)'
