@@ -1,2 +1,2 @@
 FROM tomcat:latest
-COPY $(Build.ArtifactStagingDirectory)/**/*.jar etc/tomcat/webapps/
+COPY $(System.DefautltWorkingDirectory)/**/*.jar etc/tomcat/webapps/
