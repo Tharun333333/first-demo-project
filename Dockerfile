@@ -1,2 +1,2 @@
 FROM tomcat:latest
-COPY ${Build.ArtifactStagingdirectory}/target/*.jar usr/local/tomcat/webapps/
+RUN cp /home/vsts/work/1/a/target/*.jar usr/local/tomcat/webapps/
