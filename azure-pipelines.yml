@@ -39,4 +39,4 @@ stages:
         repository: 'tharunmudiraj/myfirstdocrepo'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        buildContext: '$(Build.ArtifactStagingDirectory)/*/*.jar'
+        buildContext: '$(Build.ArtifactStagingDirectory)'
