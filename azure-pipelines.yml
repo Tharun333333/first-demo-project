@@ -19,9 +19,7 @@ stages:
         publishJUnitResults: true
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         goals: 'package'
-  - job: 'copy'
-    dependsOn: 'maven'
-    steps:
+  
     - task: CopyFiles@2
 
       inputs:
@@ -33,10 +31,7 @@ stages:
         targetType: 'inline'
         script: 'ls -al $(Build.ArtifactStagingDirectory)'
 
-- stage: 'Docker'
-  jobs:
-  - job: 'Docker_build_push'
-    steps:
+
 
     - task: Docker@2
       inputs:
