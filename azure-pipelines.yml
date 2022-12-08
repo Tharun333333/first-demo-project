@@ -34,7 +34,7 @@ stages:
 
   - job: 'docker'
     steps:
-    - checkout: 'None'
+    - checkout: None
 
 
     - task: Docker@2
