@@ -1,3 +1,3 @@
 FROM tomcat:latest
 WORKDIR usr/local/tomcat/webapps/
-COPY . .
+COPY /**/*.jar .
